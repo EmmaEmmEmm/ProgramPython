@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-10">
+                <table class="col-12">
+                    <thead>
+                        <tr>
+                            <th>購物車</th>
+                            <th>價格</th>
+                            <th>數量</th>
+                            <th>總價</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="name">發財豬</th>
+                            <th class="price">NT12000</th>
+                            <th class="number"><input type="number" value="1" onchange="calc_price(this)"></th>
+                            <th class="total-price">NT12000</th>
+                        </tr>
+                        <tr>
+                            <th class="name">發財樹</th>
+                            <th class="price">NT18000</th>
+                            <th class="number"><input type="number" value="1" onchange="calc_price(this)"></th>
+                            <th class="total-price">NT18000</th>
+                        </tr>
+                        <tr>
+                            <th class="name">發財鼠</th>
+                            <th class="price">NT8000</th>
+                            <th class="number"><input type="number" value="2" onchange="calc_price(this)"></th>
+                            <th class="total-price">NT16000</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="col-8"></div>
+            <div class="col-4 text-end row">
+                <div class="col text-end">
+                    <div>稅前總額</div>
+                    <div>稅後總額</div>
+                    <div>運費</div>
+                    <div>最終價格</div>
+                </div>
+                <div class="col text-end">
+                    <div id="price-before-tax">NT0</div>
+                    <div id="price-after-tax">NT0</div>
+                    <div id="delivery-fee">NT0</div>
+                    <div id="final-price">NT0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calc_price(input) {
+            const row = input.closest('tr');
+            const price = parseInt(row.querySelector('.price').textContent.replace("NT", ""), 10);
+            const quantity = parseInt(input.value, 10);
+            const totalPrice = price * quantity;
+            row.querySelector('.total-price').textContent = `NT${totalPrice}`;
+            updateSubtotal();
+        }
+
+        function updateSubtotal() {
+            let subtotal = 0;
+            document.querySelectorAll('.total-price').forEach((cell) => {
+                const total = parseInt(cell.textContent.replace("NT", ""), 10);
+                subtotal += total;
+            });
+            const tax = subtotal * 0.05;
+            const deliveryFee = 100;
+            const finalPrice = subtotal + tax + deliveryFee;
+
+            document.getElementById("price-before-tax").textContent = `NT${subtotal}`;
+            document.getElementById("price-after-tax").textContent = `NT${subtotal + tax}`;
+            document.getElementById("delivery-fee").textContent = `NT${deliveryFee}`;
+            document.getElementById("final-price").textContent = `NT${finalPrice}`;
+        }
+        updateSubtotal()
+    </script>
+</body>
+</html>
