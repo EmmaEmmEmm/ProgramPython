@@ -1,16 +1,31 @@
-lineOne = input().split()
-lineTwo = input().split()
+ans_list = []
+def create(string=""):
+    if len(string) == 4:
+        ans_list.append(string)
+        return
+    for i in range(10):
+        if str(i) not in string:
+            create(string + str(i))
 
-num = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-color = ['S', 'H', 'D', 'C']
-test = []
-for i in range(0, len(num)):
-    for j in range(0, len(color)):
-        test.append(num[i] + color[j])
+def check(check, ans):
+    a, b = 0, 0
+    for i in range(len(check)):
+        if check[i] in ans:
+            if check[i] == ans[i]:
+                a += 1
+            else:
+                b += 1
+    return f"{a}A{b}B"
+create()
 
-def error(a):
-    for i in a:
-        if i not in test:
-            return 1
-print(error(lineOne))
-print(error(lineTwo))
+while 1:
+    check_str = ans_list[0]
+    AB = input(ans_list[0] + "\n")
+    if AB == "1":
+        break
+    current_list = []
+
+    for i in ans_list:
+        if AB == check(check_str, i):
+            current_list.append(i)
+    ans_list = current_list
