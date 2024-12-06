@@ -19,6 +19,7 @@ def check(check, ans):
     
 create_ans()
 while True:
+    print(AB)
     check_str = ans_list[0]
     B = check(check_str, AB)
     if check_str == AB:
