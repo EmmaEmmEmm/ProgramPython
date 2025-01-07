@@ -1,7 +1,6 @@
 import datetime
 
 def parse_prize_period(period_str):
-    """解析中獎期間"""
     year, months = period_str.split('-')
     start_month, end_month = map(int, months.split(','))
     year = int(year)
@@ -11,8 +10,7 @@ def parse_prize_period(period_str):
     return start_date, end_date
 
 def validate_invoice(invoice_number, date, prize_period):
-    """驗證發票格式及是否在中獎期間"""
-    if len(invoice_number) != 8 or not invoice_number.isdigit():
+    if len(invoice_number) != 8 or not int(invoice_number) % 1 == 0:
         return "invalid format"
     try:
         invoice_date = datetime.date.fromisoformat(date)
@@ -23,7 +21,6 @@ def validate_invoice(invoice_number, date, prize_period):
     return "valid"
 
 def check_prizes(invoice_number, prize_numbers):
-    """檢查發票是否中獎"""
     special_prize, grand_prize, *first_prizes = prize_numbers
     prize_levels = [
         ("Special Prize", 10_000_000, special_prize),
